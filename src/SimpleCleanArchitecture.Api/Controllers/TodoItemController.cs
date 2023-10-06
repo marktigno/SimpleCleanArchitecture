@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using SimpleCleanArchitecture.Application.Services;
-using SimpleCleanArchitecture.Domain.Entities;
 
 namespace SimpleCleanArchitecture.Api;
 
