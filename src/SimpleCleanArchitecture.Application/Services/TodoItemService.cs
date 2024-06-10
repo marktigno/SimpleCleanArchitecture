@@ -1,5 +1,6 @@
 
 using System.Security.Cryptography.X509Certificates;
+using ErrorOr;
 using SimpleCleanArchitecture.Application.Persistence;
 using SimpleCleanArchitecture.Domain.Entities;
 
@@ -35,30 +36,36 @@ public class TodoItemService : ITodoItemService
         }
     }
 
-    public TodoItemResponse? GetTodoItem(Guid id)
+    public Either<TodoItemResponse, NullReferenceException> GetTodoItem(Guid id)
     {
         TodoItem? todoItem = _todoItemRepository.GetTodoItem(id);
         
-        if (todoItem is not null)
+        if (todoItem is null)
         {
-            TodoItemResponse todoItemResponse = new TodoItemResponse{
-                Id = todoItem.Id,
-                TodoEntry = todoItem.TodoEntry,
-                DateTimeCreated = todoItem.DateTimeCreated,
-                DateTimeModified = todoItem.DateTimeModified
-            };
-
-            return todoItemResponse;
+            return new Either<TodoItemResponse, NullReferenceException>(new NullReferenceException("To do item returned null or empty."));
         }
 
-        return null;
+        TodoItemResponse todoItemResponse = new TodoItemResponse{
+            Id = todoItem.Id,
+            TodoEntry = todoItem.TodoEntry,
+            DateTimeCreated = todoItem.DateTimeCreated,
+            DateTimeModified = todoItem.DateTimeModified
+        };
+
+        return new Either<TodoItemResponse, NullReferenceException>(todoItemResponse);
     }
 
-    public async Task<List<TodoItemResponse>?> GetTodoItems()
+    public async Task<ErrorOr<List<TodoItemResponse>?>> GetTodoItems()
     {
         List<TodoItemResponse> todoItemResponses = new List<TodoItemResponse>();
 
         IReadOnlyList<TodoItem> todoItems = await _todoItemRepository.GetTodoItems();
+
+        if (todoItems.Count == 0)
+        {
+            return Error.NotFound(description: "To do items are empty.");
+        }
+
         foreach (TodoItem todoItem in todoItems)
         {
             todoItemResponses.Add(new TodoItemResponse {

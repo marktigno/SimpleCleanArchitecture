@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 using SimpleCleanArchitecture.Application.Services;
 
 namespace SimpleCleanArchitecture.Api;
@@ -38,12 +40,22 @@ public class TodoItemController : ControllerBase
     [HttpGet("get")]
     public IActionResult GetTodo(Guid id)
     {
-        return Ok(_todoItemService.GetTodoItem(id));
+        var result = _todoItemService.GetTodoItem(id);
+        return result.Match<IActionResult>(response => Ok(response),
+            ex => new BadRequestResult());
+
     }
 
     [HttpGet("getall")]
     public IActionResult GetAllTodos()
     {
-        return Ok(_todoItemService.GetTodoItems());
+        var result = _todoItemService.GetTodoItems();
+
+        if (result.Result.IsError)
+        {
+            return new NotFoundResult();
+        }
+
+        return Ok(result.Result.Value);
     }
 }
