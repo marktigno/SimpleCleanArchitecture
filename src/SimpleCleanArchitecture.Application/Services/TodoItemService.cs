@@ -39,19 +39,19 @@ public class TodoItemService : ITodoItemService
     {
         TodoItem? todoItem = _todoItemRepository.GetTodoItem(id);
         
-        if (todoItem is not null)
+        if (todoItem is null)
         {
-            TodoItemResponse todoItemResponse = new TodoItemResponse{
-                Id = todoItem.Id,
-                TodoEntry = todoItem.TodoEntry,
-                DateTimeCreated = todoItem.DateTimeCreated,
-                DateTimeModified = todoItem.DateTimeModified
-            };
-
-            return todoItemResponse;
+            throw new NullReferenceException("To do item returned empty or null.");
         }
 
-        return null;
+        TodoItemResponse todoItemResponse = new TodoItemResponse{
+            Id = todoItem.Id,
+            TodoEntry = todoItem.TodoEntry,
+            DateTimeCreated = todoItem.DateTimeCreated,
+            DateTimeModified = todoItem.DateTimeModified
+        };
+
+        return todoItemResponse;
     }
 
     public async Task<List<TodoItemResponse>?> GetTodoItems()
