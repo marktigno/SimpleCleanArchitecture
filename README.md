@@ -12,5 +12,4 @@ Build the solution by executing the following command commands:
 To run the project:
 - ```dotnet run --project .\src\SimpleCleanArchitecture.Api\```
 
-Then open Swagger UI to test the REST API endpoints.
-```http://localhost:5000/swagger```
+Then open Swagger UI to test the REST API endpoints: https://localhost:5001/swagger
