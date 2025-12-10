@@ -2,3 +2,4 @@
 .vscode/launch.json
 src/**/obj/**
 src/**/bin/**
+/.vs

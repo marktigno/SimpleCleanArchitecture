@@ -1,6 +1,6 @@
 using SimpleCleanArchitecture.Application;
 using SimpleCleanArchitecture.Infrastructure;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 {
