@@ -4,12 +4,16 @@ I have created a minimal solution that follows Clean Architecture setup. I used 
 If you found an issue or want to get know more, please ping me here or on my linkedIn account: https://www.linkedin.com/in/mark-joseph-tigno/
 
 # How to get the project running:
-Build the solution by executing the following command commands:
+Build the solution by executing the following commands:
 - ```dotnet clean```
 - ```dotnet restore```
 - ```dotnet build```
 
+Register a dev certificate on your local machine:
+- ```dotnet dev-certs https --clean```
+- ```dotnet dev-certs https --trust```
+
 To run the project:
-- ```dotnet run --project .\src\SimpleCleanArchitecture.Api\```
+- ```dotnet run --project ./src/SimpleCleanArchitecture.Api```
 
 Then open Swagger UI to test the REST API endpoints: https://localhost:5001/swagger
