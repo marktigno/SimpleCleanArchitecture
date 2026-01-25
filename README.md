@@ -14,6 +14,6 @@ Register a dev certificate on your local machine:
 - ```dotnet dev-certs https --trust```
 
 To run the project:
-- ```dotnet run --project ./src/SimpleCleanArchitecture.Api```
+- ```dotnet run --project ./src/SimpleCleanArchitecture.Api --launch-profile https```
 
 Then open Swagger UI to test the REST API endpoints: https://localhost:5001/swagger
